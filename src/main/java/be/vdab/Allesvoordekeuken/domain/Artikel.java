@@ -51,4 +51,10 @@ public class Artikel {
     public void setVerkoopprijs(BigDecimal verkoopprijs) {
         this.verkoopprijs = verkoopprijs;
     }
+    public void verhoogVerkoopPrijs(BigDecimal bedrag) {
+        if (bedrag.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException();
+        }
+        verkoopprijs=verkoopprijs.add(bedrag);
+    }
 }
