@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @ComponentScan(value = "be.vdab.Allesvoordekeuken.repositories",
         resourcePattern = "JpaArtikelRepository.class")
 @Sql("/insertArtikel.sql")
-public class DefaultArtikelServiceTestIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+ class DefaultArtikelServiceTestIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final EntityManager manager;
     private final ArtikelService service;
     public DefaultArtikelServiceTestIntegrationTest(EntityManager manager, ArtikelService service) {

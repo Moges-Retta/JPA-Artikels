@@ -43,4 +43,14 @@ public class JpaArtikelRepositoryTest  extends AbstractTransactionalJUnit4Spring
         assertThat(artikel.getId()).isPositive();
         assertThat(super.countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
+    @Test
+    void findNaamBevatWoord(){
+        assertThat(repository.findNaamBevatWoord("pe"))
+                .hasSize(super.countRowsInTableWhere(
+                        "artikels",
+                        "naam like 'pe'"))
+                .extracting(artikel1 -> artikel1.getNaam().toLowerCase())
+                .allSatisfy(naam->assertThat(naam).contains("pe"))
+                .isSorted();
+    }
 }
