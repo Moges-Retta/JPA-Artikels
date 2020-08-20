@@ -1,1 +1,1 @@
-insert into artikels (naam,aankoopprijs,verkoopprijs) values ("test",0,0)
+insert into artikels (naam,aankoopprijs,verkoopprijs) values ("test",1000,1000)

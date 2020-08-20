@@ -23,13 +23,13 @@ public class JpaArtikelRepositoryTest  extends AbstractTransactionalJUnit4Spring
     public JpaArtikelRepositoryTest(JpaArtikelRepository repository) {
         this.repository = repository;
     }
-    private int idVanTestMan() {
+    private int idVanTestArtikel() {
         return super.jdbcTemplate.queryForObject(
                 "select id from artikels where naam = 'test'", Integer.class);
     }
     @Test
     void findById() {
-        assertThat(repository.findById(idVanTestMan())
+        assertThat(repository.findById(idVanTestArtikel())
                 .get().getNaam()).isEqualTo("test");
     }
     @Test
@@ -52,5 +52,14 @@ public class JpaArtikelRepositoryTest  extends AbstractTransactionalJUnit4Spring
                 .extracting(artikel1 -> artikel1.getNaam().toLowerCase())
                 .allSatisfy(naam->assertThat(naam).contains("pe"))
                 .isSorted();
+    }
+    @Test
+    void algemeneOpslag(){
+        assertThat(repository.algemeneOpslag(BigDecimal.TEN))
+                .isEqualTo(super.countRowsInTable(ARTIKELS));
+        assertThat(super.jdbcTemplate.queryForObject(
+                "select verkoopprijs from artikels where id=?", BigDecimal.class,
+                idVanTestArtikel()))
+                .isEqualByComparingTo("1100");
     }
 }
