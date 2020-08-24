@@ -1,1 +1,2 @@
-insert into artikels (naam,aankoopprijs,verkoopprijs) values ("test",1000,1000)
+insert into artikels (naam,aankoopprijs,verkoopprijs,soort,houdbaarheid) values ('FoodArtikel',1000,1000,'F',7)
+insert into artikels (naam,aankoopprijs,verkoopprijs,soort,garantie) values ('NonFoodArtikel',1000,1000,'NF',36)
