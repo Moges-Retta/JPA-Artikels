@@ -2,6 +2,7 @@ package be.vdab.Allesvoordekeuken.resources;
 
 import be.vdab.Allesvoordekeuken.domain.Artikel;
 import be.vdab.Allesvoordekeuken.domain.FoodArtrikel;
+import be.vdab.Allesvoordekeuken.domain.Korting;
 import be.vdab.Allesvoordekeuken.domain.NonFoodArtikel;
 import be.vdab.Allesvoordekeuken.repositories.JpaArtikelRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -87,5 +89,12 @@ public class JpaArtikelRepositoryTest  extends AbstractTransactionalJUnit4Spring
                 "select verkoopprijs from artikels where id=?", BigDecimal.class,
                 idVanTestArtikel()))
                 .isEqualByComparingTo("1100");
+    }
+    @Test
+    void kortinglezen(){
+        var kortingPercentage = new LinkedList<Double>();
+        repository.findById(idVanTestArtikel())
+                .get().getKorting()
+                .forEach(korting->assertThat(korting.getPercentage()).isEqualTo(5.5));
     }
 }
