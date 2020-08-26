@@ -1,6 +1,7 @@
 package be.vdab.Allesvoordekeuken.service;
 
 import be.vdab.Allesvoordekeuken.domain.Artikel;
+import be.vdab.Allesvoordekeuken.domain.ArtikelGroep;
 import be.vdab.Allesvoordekeuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.Allesvoordekeuken.repositories.ArtikelRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,10 +24,11 @@ public class DefaultArtikelServiceTest {
     private ArtikelRepository repository;
     private ArtikelService service;
     private Artikel artikel;
-
+    private ArtikelGroep artikelGroep;
     @BeforeEach
     void beforeEach(){
-        artikel=new Artikel("test", BigDecimal.valueOf(100),BigDecimal.valueOf(100));
+        artikelGroep=new ArtikelGroep("test");
+        artikel=new Artikel("test", BigDecimal.valueOf(100),BigDecimal.valueOf(100),artikelGroep);
         service = new DefaultArtikelService(repository);
     }
 

@@ -42,5 +42,4 @@ public class JpaArtikelRepository implements ArtikelRepository{
         return manager.createNamedQuery("Artikel.algemeneOpslag")
                 .setParameter("factor",factor).executeUpdate();
     }
-
 }

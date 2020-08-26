@@ -9,8 +9,9 @@ import java.math.BigDecimal;
 @DiscriminatorValue("F")
 public class FoodArtrikel extends Artikel{
     private int houdbaarheid;
-    public FoodArtrikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int houdbaarheid) {
-        super(naam, aankoopprijs, verkoopprijs);
+    public FoodArtrikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int houdbaarheid,
+                        ArtikelGroep artikelGroep) {
+        super(naam, aankoopprijs, verkoopprijs,artikelGroep);
         this.houdbaarheid = houdbaarheid;
     }
     protected FoodArtrikel() {

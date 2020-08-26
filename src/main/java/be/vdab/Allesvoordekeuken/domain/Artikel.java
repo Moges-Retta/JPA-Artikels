@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,11 +23,17 @@ public class Artikel {
             joinColumns = @JoinColumn(name = "artikelid"))
     private Set<Korting> kortingen;
 
-    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "artikelgroepid")
+    private ArtikelGroep artikelGroeps;
+
+    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs,
+                   ArtikelGroep artikelGroeps) {
         this.naam = naam;
         this.aankoopprijs = aankoopprijs;
         this.verkoopprijs = verkoopprijs;
         this.kortingen = new LinkedHashSet<>();
+        setArtikelGroeps(artikelGroeps);
     }
     protected Artikel(){
     }
@@ -76,5 +83,33 @@ public class Artikel {
     }
     public boolean removeBijnaam(Korting korting) {
         return kortingen.remove(korting);
+    }
+
+    public ArtikelGroep getArtikelGroeps() {
+        return artikelGroeps;
+    }
+
+    public void setArtikelGroeps(ArtikelGroep artikelGroeps) {
+        if (!artikelGroeps.getArtikels().contains(this)) {
+            artikelGroeps.add(this);
+        }
+        this.artikelGroeps = artikelGroeps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Artikel)) return false;
+        Artikel artikel = (Artikel) o;
+        return naam.equals(artikel.naam) &&
+                aankoopprijs.equals(artikel.aankoopprijs) &&
+                verkoopprijs.equals(artikel.verkoopprijs) &&
+                kortingen.equals(artikel.kortingen) &&
+                artikelGroeps.equals(artikel.artikelGroeps);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(naam, aankoopprijs, verkoopprijs, kortingen, artikelGroeps);
     }
 }
