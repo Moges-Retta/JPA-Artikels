@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @Import(JpaArtikelRepository.class)
-@Sql({"/insertArtikelgroep.sql","/insertArtikel.sql"})
+@Sql({"/insertArtikelgroep.sql","/insertArtikel.sql"}) // order is important
 class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final JpaArtikelRepository repository;
     private final EntityManager manager;
@@ -58,7 +58,7 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     void createFood(){
-        manager.persist(artikelGroep);
+        manager.persist(artikelGroep);// first step before create
         var artikelFood = new FoodArtrikel("Pizza", BigDecimal.ONE,BigDecimal.ONE,7,artikelGroep);
         repository.create(artikelFood);
         manager.flush();
