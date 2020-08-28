@@ -80,13 +80,24 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     void findNaamBevatWoord(){
-        assertThat(repository.findNaamBevatWoord("pe"))
+        var artikels = repository.findNaamBevatWoord("e");
+        manager.clear();
+       assertThat(artikels)
                 .hasSize(super.countRowsInTableWhere(
                         "artikels",
-                        "naam like 'pe'"))
-                .extracting(artikel1 -> artikel1.getNaam().toLowerCase())
-                .allSatisfy(naam->assertThat(naam).contains("pe"))
+                        "naam like 'e'"))
+                .extracting(artikel1 ->
+                        artikel1.getNaam().toLowerCase())
+                .allSatisfy(naam->
+                        assertThat(naam).contains("e"))
                 .isSorted();
+
+        assertThat(artikels).extracting(artikel1 -> artikel1.getArtikelGroeps().getNaam());
+
+        /*repository.findNaamBevatWoord("pe")
+                .forEach(artikel1 ->
+                        assertThat(artikel1.getArtikelGroeps().getNaam()
+                                .equalsIgnoreCase("fruit")));*/
     }
     @Test
     void algemeneOpslag(){

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +30,10 @@ public class JpaArtikelRepository implements ArtikelRepository{
     @Override
     public List<Artikel> findNaamBevatWoord(String word) {
         return manager.createNamedQuery("Artikel.findNaamBevatWoord")
-                .setParameter("name",word).getResultList();
-
-                /*.createQuery(
-                "select d from Artikel d where d.naam like :word order by d.naam",
-                Artikel.class).setParameter("word",word).getResultList();*/
+                .setParameter("name",word)
+                .setHint("javax.persistence.loadgraph",
+                        manager.createEntityGraph(Artikel.MET_ARTIKELGROEP))
+                .getResultList();
     }
 
     @Override
